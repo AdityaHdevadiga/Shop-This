@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex Streetwear - F1 Inspired Fashion</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation Header -->
+    <nav class="nav-header">
+        <div class="container">
+            <div class="nav-content">
+                <div class="nav-logo" onclick="showHomePage()">
+                    <h1>APEX</h1>
+                    <span class="nav-subtitle">STREETWEAR</span>
+                </div>
+                <div class="nav-actions">
+                    <button class="nav-link" onclick="showAuthPage('login')">Login</button>
+                    <button class="cart-icon" onclick="showCartPage()">
+                        <span class="cart-text">Cart</span>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="homePage" class="page active">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">RACE THE STREETS</h1>
+                    <p class="hero-subtitle">F1-Inspired Streetwear for Champions</p>
+                    <div class="hero-graphic">🏎️</div>
+                    <button class="btn btn--primary btn--lg" onclick="showCategoryPage('tees')">
+                        View All Products
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section class="categories-section">
+            <div class="container">
+                <h2 class="section-title">Shop by Category</h2>
+                <div class="categories-grid">
+                    <div class="category-card functional" onclick="showCategoryPage('tees')">
+                        <div class="category-icon">👕</div>
+                        <h3>Tees</h3>
+                        <p>Racing heritage designs</p>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">🧥</div>
+                        <h3>Jackets</h3>
+                        <p>Track-ready outerwear</p>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">🧢</div>
+                        <h3>Caps</h3>
+                        <p>Team-inspired headwear</p>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">⌚</div>
+                        <h3>Accessories</h3>
+                        <p>Racing essentials</p>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">⭐</div>
+                        <h3>Limited Edition</h3>
+                        <p>Exclusive collections</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Category Page (Tees) -->
+    <div id="categoryPage" class="page">
+        <div class="container">
+            <div class="breadcrumb">
+                <button onclick="showHomePage()" class="breadcrumb-link">Home</button>
+                <span class="breadcrumb-separator">></span>
+                <span>Tees</span>
+            </div>
+
+            <div class="category-header">
+                <h1>Racing Tees</h1>
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search products..." class="form-control search-input">
+                </div>
+            </div>
+
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be populated by JavaScript -->
+            </div>
+
+            <div class="empty-state" id="emptyState" style="display: none;">
+                <h3>No products found</h3>
+                <p>Try adjusting your search terms</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Page -->
+    <div id="productPage" class="page">
+        <div class="container">
+            <div class="breadcrumb">
+                <button onclick="showHomePage()" class="breadcrumb-link">Home</button>
+                <span class="breadcrumb-separator">></span>
+                <button onclick="showCategoryPage('tees')" class="breadcrumb-link">Tees</button>
+                <span class="breadcrumb-separator">></span>
+                <span id="productBreadcrumb">Product</span>
+            </div>
+
+            <div class="product-details">
+                <div class="product-image">
+                    <img id="productImage" src="" alt="Product">
+                </div>
+                <div class="product-info">
+                    <h1 id="productName"></h1>
+                    <p class="product-price" id="productPrice"></p>
+                    <p class="product-description" id="productDescription"></p>
+                    <button class="btn btn--primary btn--full-width" onclick="addToCart()">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Page -->
+    <div id="cartPage" class="page">
+        <div class="container">
+            <div class="breadcrumb">
+                <button onclick="showHomePage()" class="breadcrumb-link">Home</button>
+                <span class="breadcrumb-separator">></span>
+                <span>Cart</span>
+            </div>
+
+            <h1>Shopping Cart</h1>
+
+            <div class="cart-content" id="cartContent">
+                <!-- Cart items will be populated by JavaScript -->
+            </div>
+
+            <div class="cart-empty" id="cartEmpty" style="display: none;">
+                <h3>Your cart is empty</h3>
+                <p>Start shopping to add items to your cart</p>
+                <button class="btn btn--primary" onclick="showHomePage()">Continue Shopping</button>
+            </div>
+
+            <div class="cart-footer" id="cartFooter" style="display: none;">
+                <div class="cart-subtotal">
+                    <h3>Subtotal: $<span id="cartSubtotal">0.00</span></h3>
+                </div>
+                <button class="btn btn--primary btn--full-width">
+                    Proceed to Checkout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Page -->
+    <div id="loginPage" class="page">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <h1>Welcome Back</h1>
+                    <p>Sign in to your account</p>
+                </div>
+                <form class="auth-form" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--full-width">Sign In</button>
+                </form>
+                <div class="auth-links">
+                    <button onclick="showAuthPage('forgot')" class="auth-link">Forgot Password?</button>
+                    <button onclick="showAuthPage('signup')" class="auth-link">Create Account</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sign Up Page -->
+    <div id="signupPage" class="page">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <h1>Join the Race</h1>
+                    <p>Create your account</p>
+                </div>
+                <form class="auth-form" onsubmit="handleSignup(event)">
+                    <div class="form-group">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" id="signupName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" id="signupEmail" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" id="signupPassword" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--full-width" id="signupBtn">
+                        Create Account
+                    </button>
+                </form>
+                <div class="auth-links">
+                    <button onclick="showAuthPage('login')" class="auth-link">Already have an account?</button>
+                </div>
+                <div id="signupSuccess" class="status status--success" style="display: none;">
+                    Account created successfully!
+                </div>
+                <div id="signupError" class="status status--error" style="display: none;">
+                    Error creating account. Please try again.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Page -->
+    <div id="forgotPage" class="page">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <h1>Reset Password</h1>
+                    <p>Enter your email to receive an OTP</p>
+                </div>
+                <form class="auth-form" onsubmit="handleForgotPassword(event)">
+                    <div class="form-group">
+                        <label class="form-label">Email</label>
+                        <input type="email" id="forgotEmail" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--full-width">
+                        Send OTP
+                    </button>
+                </form>
+                <div class="auth-links">
+                    <button onclick="showAuthPage('login')" class="auth-link">Back to Login</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OTP Verification Page -->
+    <div id="otpPage" class="page">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <h1>Verify OTP</h1>
+                    <p>Enter the 6-digit code sent to your email</p>
+                </div>
+                <form class="auth-form" onsubmit="handleOtpVerification(event)">
+                    <div class="form-group">
+                        <label class="form-label">OTP Code</label>
+                        <input type="text" id="otpCode" class="form-control otp-input" maxlength="6" required>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--full-width">
+                        Verify OTP
+                    </button>
+                </form>
+                <div class="auth-links">
+                    <button onclick="resendOTP()" class="auth-link" id="resendBtn">Resend OTP (<span id="timer">60</span>s)</button>
+                    <button onclick="showAuthPage('forgot')" class="auth-link">Back</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reset Password Page -->
+    <div id="resetPage" class="page">
+        <div class="container">
+            <div class="auth-container">
+                <div class="auth-header">
+                    <h1>New Password</h1>
+                    <p>Enter your new password</p>
+                </div>
+                <form class="auth-form" onsubmit="handlePasswordReset(event)">
+                    <div class="form-group">
+                        <label class="form-label">New Password</label>
+                        <input type="password" id="newPassword" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Confirm Password</label>
+                        <input type="password" id="confirmPassword" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn--primary btn--full-width">
+                        Reset Password
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
